@@ -1,0 +1,35 @@
+{
+  "name": "vulpes-client",
+  "version": "0.0.0",
+  "description": "JavaScript job worker client for the Vulpes platform",
+  "main": "source/index.js",
+  "scripts": {
+    "build": "babel source -d dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kiosked/vulpes-client.git"
+  },
+  "keywords": [
+    "vulpes",
+    "api",
+    "client",
+    "job",
+    "worker"
+  ],
+  "author": "Perry Mitchell <perry@kiosked.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kiosked/vulpes-client/issues"
+  },
+  "homepage": "https://github.com/Kiosked/vulpes-client#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
+    "@babel/plugin-transform-async-to-generator": "^7.4.0",
+    "@babel/preset-env": "^7.4.2"
+  }
+}
