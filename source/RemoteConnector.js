@@ -8,12 +8,23 @@ class RemoteConnector extends Connector {
         this._apiURL = apiURL;
     }
 
-    async getNextJob() {
+    get apiURL() {
+        return this._apiURL;
+    }
 
+    async getNextJob() {
+        const url = joinURL(this.apiURL, "/work");
+        const { data } = await request(url);
+        const { job } = data;
+        return job;
     }
 
     async stopJob(jobID, resultType, resultData = {}) {
-
+        const url = joinURL(this.apiURL, `/job/${jobID}/result`);
+        const resp = await request({
+            url,
+            method: "POST"
+        });
     }
 
     async updateProgress(jobID, currentValue, maxValue) {
