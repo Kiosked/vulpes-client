@@ -49,6 +49,9 @@ class Job extends EventEmitter {
             resultType,
             resultData
         });
+        if (this.worker.running) {
+            this.worker._startTimer();
+        }
     }
 
     async updateProgress(current, max) {

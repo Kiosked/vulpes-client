@@ -55,6 +55,10 @@ class Connector {
         throw new Error(NI);
     }
 
+    async registerWorker() {
+        throw new Error(NI);
+    }
+
     async resetJob() {
         throw new Error(NI);
     }

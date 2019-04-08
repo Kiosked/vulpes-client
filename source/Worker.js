@@ -1,5 +1,10 @@
+const EventEmitter = require("events");
+const ms = require("ms");
 const Connector = require("./Connector.js");
 const Job = require("./Job.js");
+
+const WORKER_CHECK_DELAY = ms("5s");
+const WORKER_CHECK_ERROR_DELAY = ms("15s");
 
 /**
  * A remote job payload (may not be complete)
@@ -16,13 +21,17 @@ const Job = require("./Job.js");
  * @property {Object} result.data - The result data
  */
 
-class Worker {
+class Worker extends EventEmitter {
     constructor(connector) {
+        super();
         if (connector instanceof Connector !== true) {
             throw new Error("Provided value not an instance of Connector");
         }
         this._connector = connector;
         this._job = null;
+        this._timer = null;
+        this.checkDelay = WORKER_CHECK_DELAY;
+        this.errorCheckDelay = WORKER_CHECK_ERROR_DELAY;
     }
 
     get connector() {
@@ -33,11 +42,28 @@ class Worker {
         return this._job;
     }
 
-    // async getServiceTime() {
-    //     return await this.connector.getServiceTime();
-    // }
+    get running() {
+        return this._timer === null;
+    }
 
-    async startJob() {
+    start() {
+        if (this.running) {
+            throw new Error("Cannot start: already running");
+        }
+        this._startTimer();
+    }
+
+    stop() {
+        if (this.running) {
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
+    }
+
+    async _startJob() {
+        if (this.job) {
+            throw new Error("Cannot start new job: One is already pending on this worker");
+        }
         const jobData = await this.connector.getNextJob();
         if (jobData) {
             const job = new Job(jobData);
@@ -48,9 +74,26 @@ class Worker {
         return null;
     }
 
-    // async stopJob(resultType, resultData) {
-
-    // }
+    _startTimer(delay = this.checkDelay) {
+        if (this._timer === null) {
+            return;
+        }
+        clearTimeout(this._timer);
+        this._timer = setTimeout(async () => {
+            try {
+                const job = await this._startJob();
+                if (job) {
+                    this.emit("job", {
+                        job
+                    });
+                } else {
+                    this._startTimer();
+                }
+            } catch (err) {
+                this._startTimer(this.errorCheckDelay);
+            }
+        }, delay);
+    }
 }
 
 module.exports = Worker;

@@ -109,6 +109,7 @@ class RemoteConnector extends Connector {
         let results;
         try {
             results = await request({
+                url,
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -128,6 +129,37 @@ class RemoteConnector extends Connector {
             }, "Failed querying jobs");
         }
         return results.data.jobs;
+    }
+
+    /**
+     * Register the worker on the remote service
+     * @param {String} workerID The worker's ID (UUID)
+     * @returns {Promise} A promise that resolves once registration
+     *  is complete
+     * @memberof RemoteConnector
+     */
+    async registerWorker(workerID) {
+        const url = joinURL(this.apiURL, "/worker/register");
+        try {
+            await request({
+                url,
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: workerID
+                })
+            });
+        } catch (err) {
+            throw new VError({
+                info: {
+                    statusCode: err.statusCode || 0,
+                    statusText: err.status || ""
+                },
+                cause: err
+            }, "Failed to register worker");
+        }
     }
 
     /**
