@@ -47,6 +47,10 @@ class Connector {
         throw new Error(NI);
     }
 
+    async getServiceTime() {
+        return Date.now();
+    }
+
     async queryJobs() {
         throw new Error(NI);
     }

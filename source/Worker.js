@@ -33,15 +33,24 @@ class Worker {
         return this._job;
     }
 
-    async getNextJob() {
+    // async getServiceTime() {
+    //     return await this.connector.getServiceTime();
+    // }
+
+    async startJob() {
         const jobData = await this.connector.getNextJob();
         if (jobData) {
-            const job =  new Job(jobData);
+            const job = new Job(jobData);
             job.worker = this;
+            this._job = job;
             return job;
         }
         return null;
     }
+
+    // async stopJob(resultType, resultData) {
+
+    // }
 }
 
 module.exports = Worker;

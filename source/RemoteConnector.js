@@ -75,6 +75,28 @@ class RemoteConnector extends Connector {
     }
 
     /**
+     * Get the time at the point where the Service is running
+     * @returns {Promise.<Number>} A promise that resolves with the timestamp of the server
+     * @memberof RemoteConnector
+     */
+    async getServiceTime() {
+        const url = joinURL(this.apiURL, "/time");
+        let results;
+        try {
+            results = await request(url);
+        } catch (err) {
+            throw new VError({
+                info: {
+                    statusCode: err.statusCode || 0,
+                    statusText: err.status || ""
+                },
+                cause: err
+            }, "Failed to get service time");
+        }
+        return results.data.time;
+    }
+
+    /**
      * Query the remote service for jobs
      * @param {Object} query The jobs query (refer to Vulpes documentation)
      * @param {Object=} options Query options
