@@ -5,7 +5,10 @@
   "main": "source/index.js",
   "scripts": {
     "build": "babel source -d dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run test:all",
+    "test:all": "concurrently -k -n 'server,tests' -s first 'npm run test:server' 'sleep 2 && npm run test:specs'",
+    "test:server": "node test/server.js",
+    "test:specs": "mocha -r test/index.js 'test/specs/**/*.spec.js'"
   },
   "repository": {
     "type": "git",
@@ -30,10 +33,17 @@
     "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.4.0",
     "@babel/plugin-transform-async-to-generator": "^7.4.0",
-    "@babel/preset-env": "^7.4.2"
+    "@babel/preset-env": "^7.4.2",
+    "chai": "^4.2.0",
+    "concurrently": "^4.1.0",
+    "express": "^4.16.4",
+    "mocha": "^6.1.1",
+    "sinon": "^7.3.1",
+    "vulpes-api": "^0.4.0"
   },
   "dependencies": {
     "cowl": "^0.2.0",
+    "ms": "^2.1.1",
     "url-join": "^4.0.0",
     "verror": "^1.10.0",
     "vulpes": "^0.23.0"
