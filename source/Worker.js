@@ -64,7 +64,7 @@ class Worker extends EventEmitter {
         if (this.job) {
             throw new Error("Cannot start new job: One is already pending on this worker");
         }
-        const jobData = await this.connector.getNextJob();
+        const jobData = await this.connector.startJob();
         if (jobData) {
             const job = new Job(jobData);
             job.worker = this;
@@ -75,7 +75,7 @@ class Worker extends EventEmitter {
     }
 
     _startTimer(delay = this.checkDelay) {
-        if (this._timer === null) {
+        if (this._timer !== null) {
             return;
         }
         clearTimeout(this._timer);
@@ -90,6 +90,7 @@ class Worker extends EventEmitter {
                     this._startTimer();
                 }
             } catch (err) {
+                console.error(err);
                 this._startTimer(this.errorCheckDelay);
             }
         }, delay);
