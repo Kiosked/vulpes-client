@@ -43,7 +43,7 @@ class Worker extends EventEmitter {
     }
 
     get running() {
-        return this._timer === null;
+        return this._timer !== null;
     }
 
     start() {
