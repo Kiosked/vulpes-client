@@ -21,6 +21,10 @@ class Job extends EventEmitter {
         return this._jobData.id;
     }
 
+    get jobData() {
+        return this._jobData;
+    }
+
     get status() {
         return this._jobData.status;
     }

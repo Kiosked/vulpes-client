@@ -1,10 +1,12 @@
 const EventEmitter = require("events");
 const ms = require("ms");
+const { clearDelayedInterval, setDelayedInterval } = require("delayable-setinterval");
 const Connector = require("./Connector.js");
 const Job = require("./Job.js");
 
-const WORKER_CHECK_DELAY = ms("5s");
-const WORKER_CHECK_ERROR_DELAY = ms("15s");
+const WORKER_CHECK_DELAY = ms("10s");
+const WORKER_CHECK_ERROR_DELAY = ms("20s");
+const WORKER_REGISTER_DELAY = ms("30s");
 
 /**
  * A remote job payload (may not be complete)
@@ -30,8 +32,10 @@ class Worker extends EventEmitter {
         this._connector = connector;
         this._job = null;
         this._timer = null;
+        this._registerTimer = null;
         this.checkDelay = WORKER_CHECK_DELAY;
         this.errorCheckDelay = WORKER_CHECK_ERROR_DELAY;
+        this.workerRegisterDelay = WORKER_REGISTER_DELAY;
     }
 
     get connector() {
@@ -56,7 +60,9 @@ class Worker extends EventEmitter {
     stop() {
         if (this.running) {
             clearTimeout(this._timer);
+            clearTimeout(this._registerTimer);
             this._timer = null;
+            this._registerTimer = null;
         }
     }
 
@@ -87,13 +93,22 @@ class Worker extends EventEmitter {
                         job
                     });
                 } else {
+                    this._timer = null;
                     this._startTimer();
                 }
             } catch (err) {
-                console.error(err);
+                this.emit("error", {
+                    type: "start-job",
+                    error: err
+                });
+                this._timer = null;
                 this._startTimer(this.errorCheckDelay);
             }
         }, delay);
+    }
+
+    _startRegisterTimer() {
+        this._registerTimer = setTimeout()
     }
 }
 

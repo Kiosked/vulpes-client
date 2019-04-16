@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "cowl": "^0.2.0",
+    "delayable-setinterval": "^0.1.0",
     "ms": "^2.1.1",
     "url-join": "^4.0.0",
     "verror": "^1.10.0",

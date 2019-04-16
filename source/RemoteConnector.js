@@ -43,7 +43,8 @@ class RemoteConnector extends Connector {
             throw new VError({
                 info: {
                     statusCode: err.statusCode || 0,
-                    statusText: err.status || ""
+                    statusText: err.status || "",
+                    url
                 },
                 cause: err
             }, "Failed to get job");
@@ -66,7 +67,8 @@ class RemoteConnector extends Connector {
             throw new VError({
                 info: {
                     statusCode: err.statusCode || 0,
-                    statusText: err.status || ""
+                    statusText: err.status || "",
+                    url
                 },
                 cause: err
             }, "Failed to get job tree");
@@ -88,7 +90,8 @@ class RemoteConnector extends Connector {
             throw new VError({
                 info: {
                     statusCode: err.statusCode || 0,
-                    statusText: err.status || ""
+                    statusText: err.status || "",
+                    url
                 },
                 cause: err
             }, "Failed to get service time");
@@ -123,7 +126,8 @@ class RemoteConnector extends Connector {
             throw new VError({
                 info: {
                     statusCode: err.statusCode || 0,
-                    statusText: err.status || ""
+                    statusText: err.status || "",
+                    url
                 },
                 cause: err
             }, "Failed querying jobs");
@@ -155,7 +159,8 @@ class RemoteConnector extends Connector {
             throw new VError({
                 info: {
                     statusCode: err.statusCode || 0,
-                    statusText: err.status || ""
+                    statusText: err.status || "",
+                    url
                 },
                 cause: err
             }, "Failed to register worker");
@@ -177,7 +182,8 @@ class RemoteConnector extends Connector {
             throw new VError({
                 info: {
                     statusCode: err.statusCode || 0,
-                    statusText: err.status || ""
+                    statusText: err.status || "",
+                    url
                 },
                 cause: err
             }, "Failed to reset job");
@@ -200,7 +206,8 @@ class RemoteConnector extends Connector {
             throw new VError({
                 info: {
                     statusCode: err.statusCode || 0,
-                    statusText: err.status || ""
+                    statusText: err.status || "",
+                    url
                 },
                 cause: err
             }, "Failed to start job");
@@ -234,7 +241,8 @@ class RemoteConnector extends Connector {
             throw new VError({
                 info: {
                     statusCode: err.statusCode || 0,
-                    statusText: err.status || ""
+                    statusText: err.status || "",
+                    url
                 },
                 cause: err
             }, "Failed to stop job");
@@ -269,7 +277,8 @@ class RemoteConnector extends Connector {
             throw new VError({
                 info: {
                     statusCode: err.statusCode || 0,
-                    statusText: err.status || ""
+                    statusText: err.status || "",
+                    url
                 },
                 cause: err
             }, "Failed to update job progress");
@@ -297,7 +306,8 @@ class RemoteConnector extends Connector {
             throw new VError({
                 info: {
                     statusCode: err.statusCode || 0,
-                    statusText: err.status || ""
+                    statusText: err.status || "",
+                    url
                 },
                 cause: err
             }, "Failed to get status");
