@@ -1,6 +1,6 @@
 {
   "name": "vulpes-client",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "JavaScript job worker client for the Vulpes platform",
   "main": "source/index.js",
   "scripts": {
