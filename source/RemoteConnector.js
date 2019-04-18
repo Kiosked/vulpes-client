@@ -234,7 +234,7 @@ class RemoteConnector extends Connector {
                 },
                 body: JSON.stringify({
                     type: resultType,
-                    data: resultPayload
+                    data: resultData
                 })
             });
         } catch (err) {
