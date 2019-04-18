@@ -5,6 +5,7 @@
   "main": "source/index.js",
   "scripts": {
     "build": "babel source -d dist",
+    "docs": "jsdoc2md source/**/*.js > API.md",
     "test": "npm run test:all",
     "test:all": "concurrently -k -n 'server,tests' -s first 'npm run test:server' 'sleep 2 && npm run test:specs'",
     "test:server": "node test/server.js",
@@ -37,6 +38,7 @@
     "chai": "^4.2.0",
     "concurrently": "^4.1.0",
     "express": "^4.16.4",
+    "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^6.1.1",
     "sinon": "^7.3.1",
     "vulpes-api": "^0.4.0"

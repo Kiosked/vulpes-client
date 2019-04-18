@@ -23,7 +23,17 @@ const WORKER_REGISTER_DELAY = ms("30s");
  * @property {Object} result.data - The result data
  */
 
+/**
+ * Client worker
+ * @augments EventEmitter
+ * @memberof module:VulpesClient
+ */
 class Worker extends EventEmitter {
+    /**
+     * Constructor for the worker
+     * @param {Connector} connector A connector instance
+     * @memberof Worker
+     */
     constructor(connector) {
         super();
         if (connector instanceof Connector !== true) {
@@ -38,6 +48,12 @@ class Worker extends EventEmitter {
         this.workerRegisterDelay = WORKER_REGISTER_DELAY;
     }
 
+    /**
+     * The connector instance
+     * @type {Connector}
+     * @readonly
+     * @memberof Worker
+     */
     get connector() {
         return this._connector;
     }
