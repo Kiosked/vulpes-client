@@ -8,6 +8,9 @@
 ## Classes
 
 <dl>
+<dt><a href="#Job">Job</a> ⇐ <code>EventEmitter</code></dt>
+<dd><p>Job class</p>
+</dd>
 <dt><a href="#RemoteConnector">RemoteConnector</a> ⇐ <code>Connector</code></dt>
 <dd><p>Remote connector class for connecting Vulpes APIs to
 clients</p>
@@ -51,6 +54,111 @@ Constructor for the worker
 | --- | --- | --- |
 | connector | <code>Connector</code> | A connector instance |
 
+<a name="Job"></a>
+
+## Job ⇐ <code>EventEmitter</code>
+Job class
+
+**Kind**: global class  
+**Extends**: <code>EventEmitter</code>  
+
+* [Job](#Job) ⇐ <code>EventEmitter</code>
+    * [new Job(jobData)](#new_Job_new)
+    * _instance_
+        * [.data](#Job+data) : <code>Object</code>
+        * [.id](#Job+id) : <code>String</code>
+        * [.jobData](#Job+jobData) : <code>Object</code>
+        * [.status](#Job+status) : <code>String</code>
+        * [.type](#Job+type) : <code>String</code>
+        * [.getTimeLeft()](#Job+getTimeLeft) ⇒ <code>Promise.&lt;(Number\|Infinity)&gt;</code>
+        * [.stop(resultType, [resultData])](#Job+stop) ⇒ <code>Promise</code>
+        * [.updateProgress(current, max)](#Job+updateProgress) ⇒ <code>Promise</code>
+    * _static_
+        * [.ResultType](#Job.ResultType) : <code>Object</code>
+
+<a name="new_Job_new"></a>
+
+### new Job(jobData)
+Constructor for the Job class
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| jobData | <code>Object</code> | The job data, containing the entire job payload |
+
+<a name="Job+data"></a>
+
+### job.data : <code>Object</code>
+The job's data
+
+**Kind**: instance property of [<code>Job</code>](#Job)  
+**Read only**: true  
+<a name="Job+id"></a>
+
+### job.id : <code>String</code>
+The job ID
+
+**Kind**: instance property of [<code>Job</code>](#Job)  
+**Read only**: true  
+<a name="Job+jobData"></a>
+
+### job.jobData : <code>Object</code>
+The full job payload reference
+
+**Kind**: instance property of [<code>Job</code>](#Job)  
+**Read only**: true  
+<a name="Job+status"></a>
+
+### job.status : <code>String</code>
+The current job status
+
+**Kind**: instance property of [<code>Job</code>](#Job)  
+**Read only**: true  
+<a name="Job+type"></a>
+
+### job.type : <code>String</code>
+The job type
+
+**Kind**: instance property of [<code>Job</code>](#Job)  
+**Read only**: true  
+<a name="Job+getTimeLeft"></a>
+
+### job.getTimeLeft() ⇒ <code>Promise.&lt;(Number\|Infinity)&gt;</code>
+Get the time left to complete the job
+
+**Kind**: instance method of [<code>Job</code>](#Job)  
+**Returns**: <code>Promise.&lt;(Number\|Infinity)&gt;</code> - Returns the time left in milliseconds or Infinity if
+ no limit is imposed  
+<a name="Job+stop"></a>
+
+### job.stop(resultType, [resultData]) ⇒ <code>Promise</code>
+Stop the job, setting a result
+
+**Kind**: instance method of [<code>Job</code>](#Job)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| resultType | <code>String</code> | The type of result |
+| [resultData] | <code>Object</code> | Optional result payload |
+
+<a name="Job+updateProgress"></a>
+
+### job.updateProgress(current, max) ⇒ <code>Promise</code>
+Update the job's progress
+
+**Kind**: instance method of [<code>Job</code>](#Job)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| current | <code>Number</code> | The current progress value (must be 0 or greater and less than or equal to max) |
+| max | <code>Number</code> | The max progress value (must be greater than or equal to current) |
+
+<a name="Job.ResultType"></a>
+
+### Job.ResultType : <code>Object</code>
+Job result type
+
+**Kind**: static property of [<code>Job</code>](#Job)  
 <a name="RemoteConnector"></a>
 
 ## RemoteConnector ⇐ <code>Connector</code>
