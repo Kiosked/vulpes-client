@@ -60,28 +60,64 @@ class Worker extends EventEmitter {
         return this._connector;
     }
 
+    /**
+     * Worker ID
+     * @type {String}
+     * @readonly
+     * @memberof Worker
+     */
+    get id() {
+        return this._id;
+    }
+
+    /**
+     * The current job instance
+     * @type {Job|null}
+     * @readonly
+     * @memberof Worker
+     */
     get job() {
         return this._job;
     }
 
+    /**
+     * Whether or not the worker is currently running
+     * @type {Boolean}
+     * @readonly
+     * @memberof Worker
+     */
     get running() {
         return this._timer !== null;
     }
 
+    /**
+     * Start the worker (listens for new work)
+     * @throws {Error} Throws if already running
+     * @memberof Worker
+     */
     start() {
         if (this.running) {
             throw new Error("Cannot start: already running");
         }
         this._startTimer();
+        this._startRegisterTimer();
     }
 
+    /**
+     * Stops the worker
+     * @memberof Worker
+     */
     stop() {
         if (this.running) {
             clearTimeout(this._timer);
-            clearTimeout(this._registerTimer);
+            clearDelayedInterval(this._registerTimer);
             this._timer = null;
             this._registerTimer = null;
         }
+    }
+
+    async _registerWorker() {
+        await this.connector.registerWorker(this.id);
     }
 
     async _startJob() {
@@ -125,8 +161,14 @@ class Worker extends EventEmitter {
         }, delay);
     }
 
-    _startRegisterTimer() {
-        // this._registerTimer = setTimeout()
+    async _startRegisterTimer() {
+        const onTimer = async () => {
+            await this._registerWorker();
+        };
+        // Set to something other than null
+        this._registerTimer = {};
+        await onTimer();
+        this._registerTimer = setDelayedInterval(onTimer, this.workerRegisterDelay);
     }
 }
 
