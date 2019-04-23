@@ -48,6 +48,7 @@
     "delayable-setinterval": "^0.1.0",
     "ms": "^2.1.1",
     "url-join": "^4.0.0",
+    "uuid": "^3.3.2",
     "verror": "^1.10.0",
     "vulpes": "^0.23.0"
   }

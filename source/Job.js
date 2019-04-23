@@ -106,6 +106,8 @@ class Job extends EventEmitter {
             resultData
         });
         if (this.worker.running) {
+            this.worker._job = null;
+            this.worker._timer = null;
             this.worker._startTimer();
         }
     }
